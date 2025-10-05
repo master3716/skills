@@ -8,9 +8,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class giveXp implements CommandExecutor {
+public class giveXpCommand implements CommandExecutor {
     private JavaPlugin plugin;
-    public giveXp(JavaPlugin plugin)
+    public giveXpCommand(JavaPlugin plugin)
     {
         this.plugin = plugin;
     }
@@ -26,7 +26,7 @@ public class giveXp implements CommandExecutor {
             int currentLevel = Integer.parseInt(level);
             String[] split = xp.split("/");
             int currentXp = Integer.parseInt(split[0]) + Integer.parseInt(strings[2]);
-            while(currentXp > LevelCalculator.getLevelThreshold(currentLevel))
+            while(currentXp >= LevelCalculator.getLevelThreshold(currentLevel))
             {
                 currentXp -= LevelCalculator.getLevelThreshold(currentLevel);
                 currentLevel++;

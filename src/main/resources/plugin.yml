@@ -2,3 +2,21 @@ name: skills
 version: '1.0-SNAPSHOT'
 main: me.oferg.skills.Skills
 api-version: '1.21'
+commands:
+  skills:
+    description: gives you a summary of your skills
+    usage: /<command>
+    aliases:
+      - skill
+    permission: skills.everyone
+  giveXp:
+    description: giver you xp for a skill
+    usage: /<command> player skill amount
+    permission: skills.admin
+permissions:
+  skills.everyone:
+    description: anyone could use the commands
+    default: true
+  skills.admin:
+    description: admins
+    default: op
