@@ -1,0 +1,4 @@
+name: skills
+version: '1.0-SNAPSHOT'
+main: me.oferg.skills.Skills
+api-version: '1.21'
