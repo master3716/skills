@@ -35,6 +35,7 @@ public class JoinListener implements Listener {
             plugin.getConfig().set(base + ".mining.xp", "0/" + LevelCalculator.getLevelThreshold(1));
 
             plugin.saveConfig();
+
         }
 
 

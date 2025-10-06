@@ -29,7 +29,7 @@ public class EntityDeathListener implements Listener
             if(currentXp >= Integer.parseInt(combatXp.split("/")[1])) {
                 currentXp -= LevelCalculator.getLevelThreshold(combatLevel);
                 combatLevel += 1;
-                LevelUpManager.levelUpMessage(p, "combat",  combatLevel);
+                LevelUpManager.levelUpMessage(p, "combat",  combatLevel, "combat damage + 2%");
             }
 
             combatXp = currentXp + "/" + LevelCalculator.getLevelThreshold(combatLevel);

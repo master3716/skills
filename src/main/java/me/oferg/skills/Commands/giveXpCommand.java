@@ -30,7 +30,7 @@ public class giveXpCommand implements CommandExecutor {
             {
                 currentXp -= LevelCalculator.getLevelThreshold(currentLevel);
                 currentLevel++;
-                LevelUpManager.levelUpMessage(p, strings[1], currentLevel);
+                LevelUpManager.levelUpMessage(p, strings[1], currentLevel, "you cheat");
             }
             xp = currentXp + "/" + LevelCalculator.getLevelThreshold(currentLevel);
             plugin.getConfig().set(base + ".xp", xp);
