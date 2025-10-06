@@ -52,22 +52,20 @@ players:
 |------------|---------------------------------------|---------------------------------|
 | Mining     | Break natural ores and stone blocks   | +5% chance for double drops     |
 | Foraging   | Chop down trees or wooden blocks      | +5% chance for double drops     |
-| Farming    | Harvest fully-grown crops             | +5% chance for double drops     |
+| Farming    | Harvest fully-grown crops and other farming blocks           | +5% chance for double drops     |
+| Combat    | kill mobs            | +2% damage     |
 
 ---
 
 ## 🚀 Future Plans
-
-- 🧙 **Combat skill** (gain XP from killing mobs)  
 - 🪄 **Alchemy & Fishing skills**  
-- 📊 GUI-based skill menu  
-- ⚔️ Custom level-up effects and sounds  
+- ⚔️ Skill level-up effects and sounds  
 
 ---
 
 ## 👩‍💻 Developer Info
 
-**Author:** [Kernal Ion Dicxus (Kids)](https://github.com/yourusername)  
+**Author:** [Ofer Goldberg](https://github.com/master3716)
 **Minecraft Version:** 1.21+  
 **API:** Spigot / Paper  
 **Language:** Java  
