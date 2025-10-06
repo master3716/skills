@@ -19,7 +19,7 @@ public class SkillsCommand implements CommandExecutor {
         if(commandSender instanceof Player p)
         {
             String base = "players." + p.getUniqueId() + ".skills";
-            String skillxp = "combat: " + plugin.getConfig().get(base + ".combat.xp") + "\n" + "foraging: " + plugin.getConfig().get(base + ".foraging.xp") + "\n" + "mining: " + plugin.getConfig().get(base + ".mining.xp");
+            String skillxp = "combat: " + plugin.getConfig().get(base + ".combat.xp") + "\n" + "foraging: " + plugin.getConfig().get(base + ".foraging.xp") + "\n" + "mining: " + plugin.getConfig().get(base + ".mining.xp") + "\n" + "farming: " + plugin.getConfig().get(base + ".farming.xp");
 
             p.sendMessage(ChatColor.GREEN + skillxp);
         }

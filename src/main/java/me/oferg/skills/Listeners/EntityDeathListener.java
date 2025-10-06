@@ -1,5 +1,6 @@
 package me.oferg.skills.Listeners;
 
+import me.oferg.skills.Helper;
 import me.oferg.skills.LevelCalculator;
 import me.oferg.skills.LevelUpManager;
 import org.bukkit.ChatColor;
@@ -20,21 +21,9 @@ public class EntityDeathListener implements Listener
     {
         if(e.getEntity().getKiller() != null && e.getEntity().getKiller() instanceof Player p)
         {
-            p.sendMessage(ChatColor.RED + "kill");
-            String base = "players." + p.getUniqueId() + ".skills";
-            String combatXp = plugin.getConfig().get(base + ".combat.xp").toString();
-            int combatLevel = Integer.parseInt(plugin.getConfig().get(base + ".combat.level").toString());
-            int currentXp = Integer.parseInt(combatXp.split("/")[0]);
-            currentXp += (int) LevelCalculator.xpRewardForLevel(combatLevel);
-            if(currentXp >= Integer.parseInt(combatXp.split("/")[1])) {
-                currentXp -= LevelCalculator.getLevelThreshold(combatLevel);
-                combatLevel += 1;
-                LevelUpManager.levelUpMessage(p, "combat",  combatLevel, "combat damage + 2%");
-            }
 
-            combatXp = currentXp + "/" + LevelCalculator.getLevelThreshold(combatLevel);
-            plugin.getConfig().set(base + ".combat.xp", combatXp);
-            plugin.saveConfig();
+            String base = "players." + p.getUniqueId() + ".skills";
+            Helper.gainXp(plugin, base + ".combat", p, "combat","combat damage + 2%");
         }
     }
 }

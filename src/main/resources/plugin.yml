@@ -13,6 +13,10 @@ commands:
     description: giver you xp for a skill
     usage: /<command> player skill amount
     permission: skills.admin
+  skillProgress:
+    description: opens a menu with skill progression
+    usage: /<command>
+    permission: skills.everyone
 permissions:
   skills.everyone:
     description: anyone could use the commands

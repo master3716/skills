@@ -35,7 +35,6 @@ public class EntityDamageListener implements Listener
 
         String base = "players." + p.getUniqueId() + ".skills.combat.level";
         int combatLevel = plugin.getConfig().getInt(base);
-        p.sendMessage(ChatColor.GOLD + "" + e.getDamage() + " -> " + (int)(e.getDamage() + e.getDamage() * combatLevel * 0.02));
         e.setDamage(e.getDamage() + e.getDamage() * combatLevel * 0.02);
 
     }
