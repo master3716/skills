@@ -1,5 +1,6 @@
 package me.oferg.skills;
 
+import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
@@ -193,6 +194,8 @@ public class Helper
         plugin.getConfig().set(path + ".xp", skillXp);
         plugin.getConfig().set(path + ".level", skillLevel);
         plugin.saveConfig();
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new net.md_5.bungee.api.chat.TextComponent(ChatColor.AQUA + skillName + " +" + (int) LevelCalculator.xpRewardForLevel(skillLevel) + " " + skillXp));
+        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 0.3f, 1.4f);
     }
     public static boolean roll(double chance) {
         if (chance <= 0) return false;
