@@ -52,20 +52,30 @@ players:
 |------------|---------------------------------------|---------------------------------|
 | Mining     | Break natural ores and stone blocks   | +5% chance for double drops     |
 | Foraging   | Chop down trees or wooden blocks      | +5% chance for double drops     |
-| Farming    | Harvest fully-grown crops and other farming blocks           | +5% chance for double drops     |
-| Combat    | kill mobs            | +2% damage     |
+| Farming    | Harvest fully-grown crops and other farming blocks | +5% chance for double drops     |
+| Combat     | Kill mobs                            | +2% extra damage per level      |
+
+---
+
+## 💬 Commands
+
+| Command | Description | Permission |
+|----------|--------------|-------------|
+| `/skills` | Shows your skill progress in chat | All players |
+| `/skillprogress` | Opens the skill progress menu | All players |
+| `/givexp <player> <skill> <amount>` | Gives XP to a player for a skill | OP only |
 
 ---
 
 ## 🚀 Future Plans
 - 🪄 **Alchemy & Fishing skills**  
-- ⚔️ Skill level-up effects and sounds  
+- ⚔️ **Skill level-up effects and sounds**  
 
 ---
 
 ## 👩‍💻 Developer Info
 
-**Author:** [Ofer Goldberg](https://github.com/master3716)
+**Author:** [Ofer Goldberg](https://github.com/master3716)  
 **Minecraft Version:** 1.21+  
 **API:** Spigot / Paper  
 **Language:** Java  
