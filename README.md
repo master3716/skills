@@ -1,3 +1,7 @@
+
+<img width="1024" height="1024" alt="icon" src="https://github.com/user-attachments/assets/a87b925e-d1cb-4457-9726-9e524412299a" />
+
+
 # 🧠 SKILLS — Minecraft Skill Leveling Plugin
 
 **SKILLS** is a lightweight, customizable Spigot plugin that adds a full RPG-style **skill leveling system** to Minecraft.  
