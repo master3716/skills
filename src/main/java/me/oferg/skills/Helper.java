@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -243,5 +244,54 @@ public class Helper
 
     public static void removePlayerPlaced(Block block) {
         if (block != null) playerBlocksPlaced.remove(block.getLocation());
+    }
+
+
+    public static ItemStack getTreasureLoot() {
+        Random random = new Random();
+        List<ItemStack> treasures = new ArrayList<>();
+        treasures.add(new ItemStack(Material.NAME_TAG));
+        treasures.add(new ItemStack(Material.SADDLE));
+        treasures.add(new ItemStack(Material.NAUTILUS_SHELL));
+
+        ItemStack book = new ItemStack(Material.ENCHANTED_BOOK);
+        Enchantment[] enchants = Enchantment.values();
+        Enchantment randomEnchant = enchants[random.nextInt(enchants.length)];
+        book.addUnsafeEnchantment(randomEnchant, 1);
+        treasures.add(book);
+
+        ItemStack bow = new ItemStack(Material.BOW);
+        bow.addUnsafeEnchantment(Enchantment.UNBREAKING, random.nextInt(3) + 1);
+        treasures.add(bow);
+
+        ItemStack rod = new ItemStack(Material.FISHING_ROD);
+        rod.addUnsafeEnchantment(Enchantment.LURE, random.nextInt(3) + 1);
+        treasures.add(rod);
+
+        return treasures.get(random.nextInt(treasures.size()));
+    }
+
+    public static ItemStack getJunkLoot() {
+        Random random = new Random();
+        List<Material> junk = Arrays.asList(
+                Material.LEATHER_BOOTS,
+                Material.LEATHER,
+                Material.BOWL,
+                Material.STRING,
+                Material.BONE,
+                Material.ROTTEN_FLESH
+        );
+        return new ItemStack(junk.get(random.nextInt(junk.size())));
+    }
+
+    public static ItemStack getFishLoot() {
+        Random random = new Random();
+        List<Material> fish = Arrays.asList(
+                Material.COD,
+                Material.SALMON,
+                Material.PUFFERFISH,
+                Material.TROPICAL_FISH
+        );
+        return new ItemStack(fish.get(random.nextInt(fish.size())));
     }
 }

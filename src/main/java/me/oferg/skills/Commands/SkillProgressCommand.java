@@ -48,10 +48,11 @@ public class SkillProgressCommand implements CommandExecutor {
             ItemStack foraging = Helper.CraftSkillItem(plugin, base + "foraging", "foraging", "level up by chopping trees", "each level grants 5% chance for double drops", Material.OAK_SAPLING);
             inv.setItem(16, foraging);
 
+            ItemStack fishing = Helper.CraftSkillItem(plugin, base + "fishing", "fishing", "level up by fishing", "each level grants 5% chance for rare drops", Material.FISHING_ROD);
+            inv.setItem(28, fishing);
+
             ItemStack farming = Helper.CraftSkillItem(plugin, base + "farming", "farming", "level up by harvesting crops", "each level grants 5% chance for double drops", Material.GOLDEN_HOE);
             inv.setItem(31, farming);
-
-
 
 
             p.openInventory(inv);

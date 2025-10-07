@@ -23,6 +23,7 @@ public final class Skills extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SkillsMenuListener(this), this);
         getServer().getPluginManager().registerEvents(new BlockBreakListener(this), this);
         getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
+        getServer().getPluginManager().registerEvents(new FishListener(this), this);
         getCommand("skills").setExecutor(new SkillsCommand(this));
         getCommand("giveXp").setExecutor(new giveXpCommand(this));
         getCommand("skillProgress").setExecutor(new SkillProgressCommand(this));
