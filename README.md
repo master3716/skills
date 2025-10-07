@@ -80,7 +80,7 @@ players:
 ---
 
 ## 🚀 Future Plans
-- 🪄 **Alchemy  
+- 🪄 **Alchemy**
 
 ---
 
