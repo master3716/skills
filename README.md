@@ -80,8 +80,7 @@ players:
 ---
 
 ## 🚀 Future Plans
-- 🪄 **Alchemy & additional fishing mechanics**  
-- ⚔️ **Skill level-up effects and sounds**  
+- 🪄 **Alchemy  
 
 ---
 
