@@ -65,7 +65,7 @@ players:
 | Foraging   | Chop down trees or wooden blocks      | +5% chance for double drops     |
 | Farming    | Harvest fully-grown crops and other farming blocks | +5% chance for double drops     |
 | Combat     | Kill mobs                            | +2% extra damage per level      |
-| Fishing    | Catch fish                            | +XP and increasing chance for treasure items |
+| Fishing    | Catch fish                            | +5% chance for treasure items |
 
 ---
 
