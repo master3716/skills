@@ -29,12 +29,11 @@ public class FishListener implements Listener
             Helper.gainXp(plugin, base, player, "fishing", "+5% rare loot chance");
             Random random = new Random();
             int level = plugin.getConfig().getInt(base + ".level");
-            double treasureWeight = Math.min(100, 5 + 5 * 0.05 * level);
+            double treasureWeight = Math.min(100, 5 * level);
             double remaining = 100 - treasureWeight;
             double junkWeight = (1.0 / 9.5) * remaining;
             double fishWeight = (8.5 / 9.5) * remaining;
             double total = treasureWeight + junkWeight + fishWeight;
-
             double roll = random.nextDouble() * total;
             if (roll < treasureWeight) {
                 item.setItemStack(Helper.getTreasureLoot());
