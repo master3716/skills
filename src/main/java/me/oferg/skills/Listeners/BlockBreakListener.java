@@ -18,7 +18,7 @@ import java.util.List;
 public class BlockBreakListener implements Listener
 {
 
-    private JavaPlugin plugin;
+    private final JavaPlugin plugin;
     public BlockBreakListener(JavaPlugin plugin)
     {
         this.plugin = plugin;

@@ -40,6 +40,9 @@ public class JoinListener implements Listener {
             plugin.getConfig().set(base + ".fishing.level", 1);
             plugin.getConfig().set(base + ".fishing.xp", "0/" + LevelCalculator.getLevelThreshold(1));
 
+            plugin.getConfig().set(base + ".alchemy.level", 1);
+            plugin.getConfig().set(base + ".alchemy.xp", "0/" + LevelCalculator.getLevelThreshold(1));
+
             plugin.saveConfig();
 
         }

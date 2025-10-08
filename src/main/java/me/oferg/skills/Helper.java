@@ -13,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 public class Helper
 {
@@ -293,5 +294,10 @@ public class Helper
                 Material.TROPICAL_FISH
         );
         return new ItemStack(fish.get(random.nextInt(fish.size())));
+    }
+    public static String capitalizeWords(String str) {
+        return Arrays.stream(str.split(" "))
+                .map(word -> word.isEmpty() ? word : Character.toUpperCase(word.charAt(0)) + word.substring(1))
+                .collect(Collectors.joining(" "));
     }
 }
