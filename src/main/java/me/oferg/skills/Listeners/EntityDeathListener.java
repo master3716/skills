@@ -29,7 +29,6 @@ public class EntityDeathListener implements Listener
             int baseExp = e.getDroppedExp();
             double multiplier = 1.0 + (enchantingLevel * 0.10);
             int newExp = (int) Math.round(baseExp * multiplier);
-            p.sendMessage("" + newExp);
             e.setDroppedExp(newExp);
         }
     }
