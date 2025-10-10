@@ -23,7 +23,9 @@ public class SkillsCommand implements CommandExecutor {
                     + "foraging: " + plugin.getConfig().get(base + ".foraging.xp") + "\n"
                     + "mining: " + plugin.getConfig().get(base + ".mining.xp") + "\n"
                     + "farming: " + plugin.getConfig().get(base + ".farming.xp") + "\n"
-                    + "fishing: " +  plugin.getConfig().get(base + ".fishing.xp") + "\n";
+                    + "fishing: " +  plugin.getConfig().get(base + ".fishing.xp") + "\n"
+                    + "alchemy: " + plugin.getConfig().get(base + ".alchemy.xp") + "\n"
+                    + "enchanting: " + plugin.getConfig().get(base + ".enchanting.xp") + "\n";
 
             p.sendMessage(ChatColor.GREEN + skillxp);
         }
