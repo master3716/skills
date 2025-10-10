@@ -1,6 +1,9 @@
 package me.oferg.skills.Listeners;
 
 import me.oferg.skills.LevelCalculator;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,45 +11,63 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class JoinListener implements Listener {
-    private JavaPlugin plugin;
+    private final JavaPlugin plugin;
+
     public JoinListener(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent e)
-    {
+    public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         p.sendMessage(ChatColor.GREEN + "You are online!");
         System.out.println(LevelCalculator.getLevelThreshold(1));
-        if (!p.hasPlayedBefore()) {
-            String base = "players." + p.getUniqueId() + ".skills";
 
-            plugin.getConfig().set(base + ".combat.level", 1);
-            plugin.getConfig().set(base + ".combat.xp", "0/" + LevelCalculator.getLevelThreshold(1));
+        String base = "players." + p.getUniqueId() + ".skills";
 
-            plugin.getConfig().set(base + ".foraging.level", 1);
-            plugin.getConfig().set(base + ".foraging.xp", "0/" + LevelCalculator.getLevelThreshold(1));
+        // List of all skills
+        List<String> skills = Arrays.asList(
+                "combat",
+                "foraging",
+                "mining",
+                "farming",
+                "fishing",
+                "alchemy",
+                "enchanting"
+        );
 
-            plugin.getConfig().set(base + ".mining.level", 1);
-            plugin.getConfig().set(base + ".mining.xp", "0/" + LevelCalculator.getLevelThreshold(1));
+        boolean changed = false;
 
-            plugin.getConfig().set(base + ".farming.level", 1);
-            plugin.getConfig().set(base + ".farming.xp", "0/" + LevelCalculator.getLevelThreshold(1));
+        for (String skill : skills) {
+            String levelPath = base + "." + skill + ".level";
+            String xpPath = base + "." + skill + ".xp";
 
-            plugin.getConfig().set(base + ".fishing.level", 1);
-            plugin.getConfig().set(base + ".fishing.xp", "0/" + LevelCalculator.getLevelThreshold(1));
+            if (!plugin.getConfig().contains(levelPath)) {
+                plugin.getConfig().set(levelPath, 1);
+                changed = true;
+            }
 
-            plugin.getConfig().set(base + ".alchemy.level", 1);
-            plugin.getConfig().set(base + ".alchemy.xp", "0/" + LevelCalculator.getLevelThreshold(1));
-
-            plugin.saveConfig();
-
+            if (!plugin.getConfig().contains(xpPath)) {
+                plugin.getConfig().set(xpPath, "0/" + LevelCalculator.getLevelThreshold(1));
+                changed = true;
+            }
         }
 
+        if (changed) {
+            plugin.saveConfig();
 
+            TextComponent text = new TextComponent(ChatColor.YELLOW + "New Skills Added Check Them Out!");
+            text.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "skillprogress"));
+            text.setHoverEvent(new net.md_5.bungee.api.chat.HoverEvent(
+                    net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT,
+                    new ComponentBuilder(ChatColor.BOLD + "" + ChatColor.GOLD + "Click To See The New Skills").create()
+            ));
+
+            p.spigot().sendMessage(text);
+        }
     }
 }

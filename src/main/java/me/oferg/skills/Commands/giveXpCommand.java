@@ -18,8 +18,9 @@ public class giveXpCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings)
     {
-        if(commandSender instanceof Player p)
+        if(commandSender instanceof Player)
         {
+            Player p = plugin.getServer().getPlayer(strings[0]);
             String base = "players." + p.getUniqueId() + ".skills." + strings[1];
             String xp = plugin.getConfig().get(base + ".xp").toString();
             String level = plugin.getConfig().get(base + ".level").toString();

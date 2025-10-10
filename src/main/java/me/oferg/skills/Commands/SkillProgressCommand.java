@@ -54,8 +54,12 @@ public class SkillProgressCommand implements CommandExecutor {
             ItemStack farming = Helper.CraftSkillItem(plugin, base + "farming", "farming", "level up by harvesting crops", "each level grants 5% chance for double drops", Material.GOLDEN_HOE);
             inv.setItem(31, farming);
 
-            ItemStack alchemy = Helper.CraftSkillItem(plugin, base + "alchemy", "alchemy", "level up by harvesting crops", "each level grants 3% potion duration", Material.NETHER_WART);
+            ItemStack alchemy = Helper.CraftSkillItem(plugin, base + "alchemy", "alchemy", "level up by brewing potions", "each level grants 3% potion duration", Material.NETHER_WART);
             inv.setItem(34, alchemy);
+
+            ItemStack enchanting = Helper.CraftSkillItem(plugin, base + "enchanting", "enchanting", "level up by enchanting books", "each level grants 10% more experience orbs", Material.ENCHANTING_TABLE);
+            inv.setItem(49, enchanting);
+
 
 
 

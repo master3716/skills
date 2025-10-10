@@ -3,7 +3,9 @@ package me.oferg.skills;
 import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.block.data.Bisected;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -214,6 +216,15 @@ public class Helper
             age = ageable.getAge();
         }
         playerBlocksPlaced.put(block.getLocation(), age);
+        if (block.getBlockData() instanceof Bisected bisected) {
+            if (bisected.getHalf() == Bisected.Half.BOTTOM) {
+                Block above = block.getRelative(BlockFace.UP);
+                playerBlocksPlaced.put(above.getLocation(), age);
+            } else {
+                Block below = block.getRelative(BlockFace.DOWN);
+                playerBlocksPlaced.put(below.getLocation(), age);
+            }
+        }
     }
 
     public static boolean shouldRewardXp(Block block) {
