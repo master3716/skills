@@ -38,7 +38,7 @@ public class giveXpCommand implements CommandExecutor {
             plugin.getConfig().set(base + ".xp", xp);
             plugin.getConfig().set(base + ".level", currentLevel);
             plugin.saveConfig();
-            Helper.checkExtraBonuses(plugin, p, true);
+            Helper.checkExtraBonuses(plugin, p);
 
         }
         return true;

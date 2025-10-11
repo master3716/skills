@@ -28,7 +28,7 @@ public class JoinListener implements Listener {
         Player p = e.getPlayer();
         p.sendMessage(ChatColor.GREEN + "You are online!");
         System.out.println(LevelCalculator.getLevelThreshold(1));
-        Helper.checkExtraBonuses(plugin, p, false);
+        Helper.checkExtraBonuses(plugin, p);
         String base = "players." + p.getUniqueId() + ".skills";
 
         List<String> skills = Skills.skills;

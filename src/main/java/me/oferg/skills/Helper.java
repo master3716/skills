@@ -191,6 +191,7 @@ public class Helper
         if(currentXp >= Integer.parseInt(skillXp.split("/")[1])) {
             currentXp -= LevelCalculator.getLevelThreshold(skillLevel);
             skillLevel += 1;
+            checkExtraBonuses(plugin, p);
             LevelUpManager.levelUpMessage(p, skillName,  skillLevel, reward);
         }
 
@@ -198,7 +199,6 @@ public class Helper
         plugin.getConfig().set(path + ".xp", skillXp);
         plugin.getConfig().set(path + ".level", skillLevel);
         plugin.saveConfig();
-        checkExtraBonuses(plugin, p, true);
         p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new net.md_5.bungee.api.chat.TextComponent(ChatColor.AQUA + skillName + " +" + (int) LevelCalculator.xpRewardForLevel(skillLevel) + " " + skillXp));
         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 0.3f, 1.4f);
 
@@ -313,13 +313,22 @@ public class Helper
                 .map(word -> word.isEmpty() ? word : Character.toUpperCase(word.charAt(0)) + word.substring(1))
                 .collect(Collectors.joining(" "));
     }
-    public static void checkExtraBonuses(JavaPlugin plugin, Player p, boolean print) {
+    public static void checkExtraBonuses(JavaPlugin plugin, Player p) {
         String base = "players." + p.getUniqueId() + ".skills.";
         for (String skill : Skills.skills) {
             int level = plugin.getConfig().getInt(base + skill + ".level");
             switch (skill) {
                 case "combat" -> {
-                    // do something for combat
+                    if(level >= 35)
+                    {
+                        boolean bonus = plugin.getConfig().getBoolean(base + skill + ".benefits.crit");
+                        plugin.getConfig().set(base + skill + ".benefits.crit", true);
+                        if(!bonus) p.sendMessage(ChatColor.GOLD + "You are now eligible for permanent crits");
+                    }
+                    else
+                    {
+                        plugin.getConfig().set(base + skill + ".benefits.crit", false);
+                    }
                 }
                 case "foraging" -> {
                     // do something for foraging
@@ -339,8 +348,9 @@ public class Helper
                 case "enchanting" -> {
                     if(level >= 20)
                     {
+                        boolean bonus = plugin.getConfig().getBoolean(base + skill + ".benefits.renaming");
                         plugin.getConfig().set(base + skill + ".benefits.renaming", true);
-                        if(print) p.sendMessage(ChatColor.GOLD + "You are now eligible for free renaming");
+                        if(!bonus) p.sendMessage(ChatColor.GOLD + "You are now eligible for free renaming");
                     }
                     else
                     {
