@@ -1,5 +1,6 @@
 package me.oferg.skills.Commands;
 
+import me.oferg.skills.Helper;
 import me.oferg.skills.LevelCalculator;
 import me.oferg.skills.LevelUpManager;
 import org.bukkit.command.Command;
@@ -37,6 +38,7 @@ public class giveXpCommand implements CommandExecutor {
             plugin.getConfig().set(base + ".xp", xp);
             plugin.getConfig().set(base + ".level", currentLevel);
             plugin.saveConfig();
+            Helper.checkExtraBonuses(plugin, p, true);
 
         }
         return true;

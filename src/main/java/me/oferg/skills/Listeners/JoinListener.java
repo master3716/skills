@@ -1,6 +1,8 @@
 package me.oferg.skills.Listeners;
 
+import me.oferg.skills.Helper;
 import me.oferg.skills.LevelCalculator;
+import me.oferg.skills.Skills;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -26,20 +28,10 @@ public class JoinListener implements Listener {
         Player p = e.getPlayer();
         p.sendMessage(ChatColor.GREEN + "You are online!");
         System.out.println(LevelCalculator.getLevelThreshold(1));
-
+        Helper.checkExtraBonuses(plugin, p, false);
         String base = "players." + p.getUniqueId() + ".skills";
 
-        // List of all skills
-        List<String> skills = Arrays.asList(
-                "combat",
-                "foraging",
-                "mining",
-                "farming",
-                "fishing",
-                "alchemy",
-                "enchanting"
-        );
-
+        List<String> skills = Skills.skills;
         boolean changed = false;
 
         for (String skill : skills) {

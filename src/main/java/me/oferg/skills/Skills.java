@@ -6,12 +6,24 @@ import me.oferg.skills.Commands.giveXpCommand;
 import me.oferg.skills.Listeners.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class Skills extends JavaPlugin {
+import java.util.Arrays;
+import java.util.List;
 
+public final class Skills extends JavaPlugin {
+    public static List<String> skills;
     @Override
     public void onEnable() {
         // Plugin startup logic
 
+        skills = Arrays.asList(
+                "combat",
+                "foraging",
+                "mining",
+                "farming",
+                "fishing",
+                "alchemy",
+                "enchanting"
+        );
         System.out.println("Plugin has been enabled! SKILLZ");
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
@@ -26,9 +38,11 @@ public final class Skills extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new FishListener(this), this);
         getServer().getPluginManager().registerEvents(new BrewListener(this), this);
         getServer().getPluginManager().registerEvents(new EnchantingListener(this), this);
+        getServer().getPluginManager().registerEvents(new RenameListener(this), this);
         getCommand("skills").setExecutor(new SkillsCommand(this));
         getCommand("giveXp").setExecutor(new giveXpCommand(this));
         getCommand("skillProgress").setExecutor(new SkillProgressCommand(this));
+
     }
 
     @Override
