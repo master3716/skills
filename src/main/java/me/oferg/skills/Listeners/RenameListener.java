@@ -1,5 +1,6 @@
 package me.oferg.skills.Listeners;
 
+import me.oferg.skills.Helper;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,7 +41,7 @@ public class RenameListener implements Listener
         } else {
             isRenaming = !renameText.equals(originalName);
         }
-
+        Helper.gainXp(plugin, base, p, "enchanting", "+10% more experience orbs");
         if (!isRenaming) return;
 
         int totalCost = view.getRepairCost();
