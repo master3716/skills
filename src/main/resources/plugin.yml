@@ -17,6 +17,12 @@ commands:
     description: opens a menu with skill progression
     usage: /<command>
     permission: skills.everyone
+  anvil:
+    description: opens the custom anvil for no xp caps
+    usage: /<command>
+    aliases:
+      - av
+    permission: skills.everyone
 permissions:
   skills.everyone:
     description: anyone could use the commands

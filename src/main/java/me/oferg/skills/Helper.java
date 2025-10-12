@@ -10,6 +10,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -353,12 +354,116 @@ public class Helper
                         if(!bonus) p.sendMessage(ChatColor.GOLD + "You are now eligible for free renaming");
                     }
                     else
-                    {
                         plugin.getConfig().set(base + skill + ".benefits.renaming", false);
+
+
+
+                    if(level >= 30)
+                    {
+                        boolean bonus = plugin.getConfig().getBoolean(base + skill + ".benefits.customAnvil");
+                        plugin.getConfig().set(base + skill + ".benefits.customAnvil", true);
+                        if(!bonus) p.sendMessage(ChatColor.GOLD + "You are now eligible for no xp combination cap. Do /anvil or /av");
                     }
+                    else
+                        plugin.getConfig().set(base + skill + ".benefits.customAnvil", false);
                 }
             }
             plugin.saveConfig();
         }
+    }
+
+    public static ItemStack mergeEnchantments(ItemStack first, ItemStack second, ItemStack result) {
+        Map<Enchantment, Integer> firstEnchants = getEnchantments(first);
+        Map<Enchantment, Integer> secondEnchants = getEnchantments(second);
+
+        if (firstEnchants.isEmpty() && secondEnchants.isEmpty()) {
+            return result;
+        }
+
+        firstEnchants.forEach((enchant, level) -> {
+            addEnchantmentToResult(result, enchant, level);
+        });
+
+        secondEnchants.forEach((enchant, level) -> {
+            Map<Enchantment, Integer> resultEnchants = getEnchantments(result);
+
+            if (resultEnchants.containsKey(enchant)) {
+                int existingLevel = resultEnchants.get(enchant);
+                if (existingLevel == level) {
+                    int newLevel = Math.min(level + 1, enchant.getMaxLevel());
+                    addEnchantmentToResult(result, enchant, newLevel);
+                } else {
+                    int higherLevel = Math.max(existingLevel, level);
+                    addEnchantmentToResult(result, enchant, higherLevel);
+                }
+            } else {
+                boolean compatible = true;
+                for (Enchantment existing : resultEnchants.keySet()) {
+                    if (enchant.conflictsWith(existing) || existing.conflictsWith(enchant)) {
+                        compatible = false;
+                        break;
+                    }
+                }
+                if (compatible) {
+                    addEnchantmentToResult(result, enchant, level);
+                }
+            }
+        });
+
+        return result;
+    }
+
+    public static Map<Enchantment, Integer> getEnchantments(ItemStack item) {
+        if (item.getType() == Material.ENCHANTED_BOOK) {
+            EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
+            return meta.getStoredEnchants();
+        } else {
+            return item.getEnchantments();
+        }
+    }
+
+    public static void addEnchantmentToResult(ItemStack result, Enchantment enchant, int level) {
+        if (result.getType() == Material.ENCHANTED_BOOK) {
+            EnchantmentStorageMeta meta = (EnchantmentStorageMeta) result.getItemMeta();
+            meta.addStoredEnchant(enchant, level, true);
+            result.setItemMeta(meta);
+        } else {
+            result.addUnsafeEnchantment(enchant, level);
+        }
+    }
+
+    public static ItemStack applyBookEnchantments(ItemStack item, ItemStack book, ItemStack result) {
+        EnchantmentStorageMeta bookMeta = (EnchantmentStorageMeta) book.getItemMeta();
+        Map<Enchantment, Integer> bookEnchants = bookMeta.getStoredEnchants();
+
+        bookEnchants.forEach((enchant, level) -> {
+            if (enchant.canEnchantItem(item) || item.getType() == Material.ENCHANTED_BOOK) {
+                Map<Enchantment, Integer> resultEnchants = getEnchantments(result);
+
+                if (resultEnchants.containsKey(enchant)) {
+                    int existingLevel = resultEnchants.get(enchant);
+                    if (existingLevel == level) {
+                        int newLevel = Math.min(level + 1, enchant.getMaxLevel());
+                        addEnchantmentToResult(result, enchant, newLevel);
+                    } else {
+                        int higherLevel = Math.max(existingLevel, level);
+                        addEnchantmentToResult(result, enchant, higherLevel);
+                    }
+                } else {
+                    boolean compatible = true;
+                    for (Enchantment existing : resultEnchants.keySet()) {
+                        if (enchant.conflictsWith(existing) || existing.conflictsWith(enchant)) {
+                            compatible = false;
+                            break;
+                        }
+                    }
+                    if (compatible) {
+                        addEnchantmentToResult(result, enchant, level);
+                    }
+                }
+            }
+        });
+
+        return result;
     }
 }

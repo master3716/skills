@@ -9,9 +9,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class giveXpCommand implements CommandExecutor {
+public class GiveXpCommand implements CommandExecutor {
     private JavaPlugin plugin;
-    public giveXpCommand(JavaPlugin plugin)
+    public GiveXpCommand(JavaPlugin plugin)
     {
         this.plugin = plugin;
     }

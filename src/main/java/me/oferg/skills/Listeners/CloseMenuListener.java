@@ -18,7 +18,9 @@ public class CloseMenuListener implements Listener
     {
         Player p = (Player)e.getPlayer();
         String base = "players." + p.getUniqueId();
-        plugin.getConfig().set(base + ".inventory", "");
-        plugin.saveConfig();
+        if(!plugin.getConfig().get(base + ".inventory").equals("anvil")) {
+            plugin.getConfig().set(base + ".inventory", "");
+            plugin.saveConfig();
+        }
     }
 }
