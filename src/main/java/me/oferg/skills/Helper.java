@@ -6,6 +6,9 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.block.data.Bisected;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -14,6 +17,7 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
@@ -21,6 +25,8 @@ import java.util.stream.Collectors;
 public class Helper
 {
     public static Map<Location, Integer> playerBlocksPlaced = new HashMap<>();
+    public static Map<String, List<String>> itemCommands = new HashMap<>();
+    public static Map<String, List<String>> itemPrices = new HashMap<>();
     public static String formatNumber(double num) {
         if (num >= 1_000_000_000) return String.format("%.1fB", num / 1_000_000_000.0);
         if (num >= 1_000_000)     return String.format("%.1fM", num / 1_000_000.0);
@@ -465,5 +471,35 @@ public class Helper
         });
 
         return result;
+    }
+
+    public static void loadCommands(JavaPlugin plugin) {
+        File file = new File(plugin.getDataFolder(), "shop.yml");
+        System.out.println("Loading shop.yml...");
+        FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+        ConfigurationSection items = cfg.getConfigurationSection("items");
+        if (items == null) return;
+        System.out.println("iterating items...");
+        for (String key : items.getKeys(false)) {
+            var item = items.getConfigurationSection(key);
+            if (item != null) {
+                itemCommands.put(ChatColor.stripColor(item.getString("display_name")), item.getStringList("commands"));
+                System.out.println("added item " + item.getStringList("commands"));
+                List<String> lore = new ArrayList<>();
+                lore.add(String.valueOf(item.get("price")));
+                lore.add((item.get("skill")).toString());
+                itemPrices.put(ChatColor.stripColor(item.getString("display_name")), lore);
+                System.out.println("added item!!");
+            }
+        }
+    }
+
+    public static List<String> getShopItemCmd(String displayName)
+    {
+        return itemCommands.get(displayName);
+    }
+    public static List<String> getShopItemPrice(String displayName)
+    {
+        return itemPrices.get(displayName);
     }
 }

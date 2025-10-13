@@ -1,0 +1,13 @@
+items:
+  example:
+    display_name: "example item"
+    material: "FISHING_ROD"
+    description: "example description"
+    price: 20
+    amount: 1
+    skill: "fishing"
+    commands:
+      - give %player% fishing_rod 1
+
+
+

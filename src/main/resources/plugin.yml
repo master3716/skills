@@ -23,6 +23,10 @@ commands:
     aliases:
       - av
     permission: skills.everyone
+  shop:
+    description: opens the shop
+    usage: /<command>
+    permission: skills.everyone
 permissions:
   skills.everyone:
     description: anyone could use the commands
