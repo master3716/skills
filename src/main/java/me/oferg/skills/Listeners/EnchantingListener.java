@@ -20,6 +20,6 @@ public class EnchantingListener implements Listener
         Player player = event.getEnchanter();
 
         String base = "players." + player.getUniqueId() + ".skills.enchanting";
-        Helper.gainXp(plugin, base, player, "enchanting", "+10% more experience orbs");
+        Helper.gainXp(plugin, base, player, "enchanting", "+10% more experience orbs", null);
     }
 }

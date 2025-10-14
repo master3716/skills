@@ -5,6 +5,7 @@ import me.oferg.skills.LevelCalculator;
 import me.oferg.skills.Skills;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -33,7 +34,8 @@ public class JoinListener implements Listener {
 
         List<String> skills = Skills.skills;
         boolean changed = false;
-
+        boolean legacy = false;
+        int level = 0;
         for (String skill : skills) {
             String levelPath = base + "." + skill + ".level";
             String xpPath = base + "." + skill + ".xp";
@@ -47,6 +49,24 @@ public class JoinListener implements Listener {
                 plugin.getConfig().set(xpPath, "0/" + LevelCalculator.getLevelThreshold(1));
                 changed = true;
             }
+            else
+            {
+                String xp = plugin.getConfig().get(xpPath).toString();
+                level = plugin.getConfig().getInt(levelPath);
+                if(Integer.parseInt(xp.split("/")[1]) == LevelCalculator.getLevelThresholdLegacy(level))
+                    legacy = true;
+
+            }
+
+            if(legacy)
+            {
+                p.sendMessage(ChatColor.LIGHT_PURPLE + "xp system updated");
+                int totalXp = LevelCalculator.getTotalXPLegacy(level);
+                int newLevel = LevelCalculator.getLevelFromLegacy(totalXp);
+                plugin.getConfig().set(xpPath, "0/" + LevelCalculator.getLevelThreshold(newLevel));
+                plugin.getConfig().set(levelPath, newLevel);
+                plugin.saveConfig();
+            }
         }
 
         if (changed) {
@@ -54,12 +74,13 @@ public class JoinListener implements Listener {
 
             TextComponent text = new TextComponent(ChatColor.YELLOW + "New Skills Added Check Them Out!");
             text.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "skillprogress"));
-            text.setHoverEvent(new net.md_5.bungee.api.chat.HoverEvent(
-                    net.md_5.bungee.api.chat.HoverEvent.Action.SHOW_TEXT,
+            text.setHoverEvent(new HoverEvent(
+                    HoverEvent.Action.SHOW_TEXT,
                     new ComponentBuilder(ChatColor.BOLD + "" + ChatColor.GOLD + "Click To See The New Skills").create()
             ));
 
             p.spigot().sendMessage(text);
         }
+
     }
 }

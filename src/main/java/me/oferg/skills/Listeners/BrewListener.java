@@ -50,7 +50,7 @@ public class BrewListener implements Listener {
 
         String base = "players." + p.getUniqueId() + ".skills.alchemy";
         int level = plugin.getConfig().getInt(base + ".level");
-        Helper.gainXp(plugin, base, p, "alchemy", "+3% potion duration");
+        Helper.gainXp(plugin, base, p, "alchemy", "+3% potion duration", null);
 
         new BukkitRunnable() {
             @Override

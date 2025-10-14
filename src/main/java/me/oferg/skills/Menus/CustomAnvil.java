@@ -354,7 +354,7 @@ public class CustomAnvil implements Listener {
             }
         }
 
-        plugin.getConfig().set("players." + p.getUniqueId() + ".inventory", null);
+        plugin.getConfig().set("players." + p.getUniqueId() + ".inventory", "");
         plugin.saveConfig();
 
         processingPlayers.remove(p.getUniqueId());

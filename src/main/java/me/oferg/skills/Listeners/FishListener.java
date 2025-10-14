@@ -26,7 +26,7 @@ public class FishListener implements Listener
 
         if(event.getState() == PlayerFishEvent.State.CAUGHT_FISH && event.getCaught() instanceof Item item)
         {
-            Helper.gainXp(plugin, base, player, "fishing", "+5% rare loot chance");
+            Helper.gainXp(plugin, base, player, "fishing", "+5% rare loot chance", null);
             Random random = new Random();
             int level = plugin.getConfig().getInt(base + ".level");
             double treasureWeight = Math.min(100, 5 * level);

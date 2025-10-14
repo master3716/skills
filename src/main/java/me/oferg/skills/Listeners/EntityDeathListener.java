@@ -23,7 +23,7 @@ public class EntityDeathListener implements Listener
         {
 
             String base = "players." + p.getUniqueId() + ".skills";
-            Helper.gainXp(plugin, base + ".combat", p, "combat","combat damage + 2%");
+            Helper.gainXp(plugin, base + ".combat", p, "combat","combat damage + 2%", null);
 
             int enchantingLevel = plugin.getConfig().getInt(base + ".enchanting.level");
             int baseExp = e.getDroppedExp();
