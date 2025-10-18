@@ -3,11 +3,13 @@ package me.oferg.skills.Listeners;
 import me.oferg.skills.Helper;
 import me.oferg.skills.LevelCalculator;
 import me.oferg.skills.LevelUpManager;
+import me.oferg.skills.Skills;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class EntityDeathListener implements Listener
@@ -30,6 +32,11 @@ public class EntityDeathListener implements Listener
             double multiplier = 1.0 + (enchantingLevel * 0.10);
             int newExp = (int) Math.round(baseExp * multiplier);
             e.setDroppedExp(newExp);
+
+            for(ItemStack i: e.getDrops())
+            {
+                Skills.mission.progressPlayer(p, i);
+            }
         }
     }
 }

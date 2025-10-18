@@ -1,5 +1,6 @@
 package me.oferg.skills;
 
+import me.oferg.skills.Types.Mission;
 import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -206,6 +207,29 @@ public class Helper
         plugin.getConfig().set(path + ".level", skillLevel);
         plugin.saveConfig();
         p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new net.md_5.bungee.api.chat.TextComponent(ChatColor.AQUA + skillName + " +" + (int) (LevelCalculator.xpRewardForLevel(skillLevel) * mult) + " " + skillXp));
+        p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 0.3f, 1.4f);
+
+    }
+    public static void gainXp(JavaPlugin plugin, String path, Player p, String skillName, String reward, int add)
+    {
+
+
+        String skillXp = plugin.getConfig().get(path + ".xp").toString();
+        int skillLevel = Integer.parseInt(plugin.getConfig().get(path + ".level").toString());
+        int currentXp = Integer.parseInt(skillXp.split("/")[0]);
+        currentXp += add;
+        if(currentXp >= Integer.parseInt(skillXp.split("/")[1])) {
+            currentXp -= LevelCalculator.getLevelThreshold(skillLevel);
+            skillLevel += 1;
+            checkExtraBonuses(plugin, p);
+            LevelUpManager.levelUpMessage(p, skillName,  skillLevel, reward);
+        }
+
+        skillXp = currentXp + "/" + LevelCalculator.getLevelThreshold(skillLevel);
+        plugin.getConfig().set(path + ".xp", skillXp);
+        plugin.getConfig().set(path + ".level", skillLevel);
+        plugin.saveConfig();
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new net.md_5.bungee.api.chat.TextComponent(ChatColor.AQUA + skillName + " +" + add + " " + skillXp));
         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 0.3f, 1.4f);
 
     }
@@ -963,5 +987,84 @@ public class Helper
             default:
                 return 0.67; // Default to common rarity
         }
+    }
+
+    public static void loadPlayerPlacedBlocks(JavaPlugin plugin) {
+        String base = "PlayerPlacedBlocks";
+
+        if (!plugin.getConfig().contains(base)) {
+            return;
+        }
+
+        ConfigurationSection section = plugin.getConfig().getConfigurationSection(base);
+        if (section == null) {
+            return;
+        }
+
+        playerBlocksPlaced.clear();
+
+        for (String worldName : section.getKeys(false)) {
+            World world = plugin.getServer().getWorld(worldName);
+            if (world == null) continue;
+
+            ConfigurationSection worldSection = section.getConfigurationSection(worldName);
+            if (worldSection == null) continue;
+
+            for (String xStr : worldSection.getKeys(false)) {
+                ConfigurationSection xSection = worldSection.getConfigurationSection(xStr);
+                if (xSection == null) continue;
+
+                for (String yStr : xSection.getKeys(false)) {
+                    ConfigurationSection ySection = xSection.getConfigurationSection(yStr);
+                    if (ySection == null) continue;
+
+                    for (String zStr : ySection.getKeys(false)) {
+                        int x = Integer.parseInt(xStr);
+                        int y = Integer.parseInt(yStr);
+                        int z = Integer.parseInt(zStr);
+                        int count = ySection.getInt(zStr);
+
+                        Location loc = new Location(world, x, y, z);
+                        playerBlocksPlaced.put(loc, count);
+                    }
+                }
+            }
+        }
+    }
+    public static void savePlayerPlacedBlocks(JavaPlugin plugin) {
+        String base = "PlayerPlacedBlocks";
+
+        plugin.getConfig().set(base, null);
+
+        for (Map.Entry<Location, Integer> entry : playerBlocksPlaced.entrySet()) {
+            Location loc = entry.getKey();
+            Integer count = entry.getValue();
+
+            String locPath = base + "." +
+                    loc.getWorld().getName() + "." +
+                    loc.getBlockX() + "." +
+                    loc.getBlockY() + "." +
+                    loc.getBlockZ();
+
+            plugin.getConfig().set(locPath, count);
+        }
+
+        plugin.saveConfig();
+    }
+
+    public static void loadMission(JavaPlugin plugin)
+    {
+        String base = "Mission.";
+        String targetPath = base + "target";
+        String rewardPath = base + "reward";
+        String skillPath = base + "skill";
+        String descriptionPath = base + "description";
+
+        ItemStack target = plugin.getConfig().getItemStack(targetPath);
+        String skill = plugin.getConfig().getString(skillPath);
+        int reward = plugin.getConfig().getInt(rewardPath);
+        String description = plugin.getConfig().getString(descriptionPath);
+
+        Skills.mission = new Mission(description, skill, reward, plugin, target, false);
     }
 }

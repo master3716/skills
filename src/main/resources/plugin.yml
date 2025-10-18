@@ -27,6 +27,10 @@ commands:
     description: opens the shop
     usage: /<command>
     permission: skills.everyone
+  setMission:
+    description: sets a target for players to reach
+    usage: /<command> %description% %skill% %reward% %item to collect% %amount%
+    permission: skills.admin
 permissions:
   skills.everyone:
     description: anyone could use the commands

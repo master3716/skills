@@ -1,6 +1,7 @@
 package me.oferg.skills.Listeners;
 
 import me.oferg.skills.Helper;
+import me.oferg.skills.Skills;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -62,20 +63,22 @@ public class BlockBreakListener implements Listener {
 
             int dropMultiplier = skillLevel * 5 / 100;
             double extraChance = (skillLevel * 5 % 100) / 100.0;
+            ItemStack x = new ItemStack(Material.AIR, 0);
+                    for (ItemStack drop : drops) {
+                        int totalMultiplier = dropMultiplier;
+                        if (Helper.roll(extraChance)) {
+                            totalMultiplier += 1;
+                        }
 
-            for (ItemStack drop : drops) {
-                int totalMultiplier = dropMultiplier;
-                if (Helper.roll(extraChance)) {
-                    totalMultiplier += 1;
-                }
+                        if (totalMultiplier <= 0) continue; // skip AIR
 
-                if (totalMultiplier > 0) {
-                    p.getWorld().dropItemNaturally(
-                            blockLoc,
-                            new ItemStack(drop.getType(), Math.max(1, totalMultiplier * drop.getAmount()))
-                    );
-                }
-            }
+                        ItemStack toGive = new ItemStack(drop.getType(), totalMultiplier * drop.getAmount());
+                        p.getWorld().dropItemNaturally(blockLoc, toGive);
+
+                        Skills.mission.progressPlayer(p, toGive);
+                    }
+
+
 
             Helper.removePlayerPlaced(blockLoc.getBlock());
         }, 3L);

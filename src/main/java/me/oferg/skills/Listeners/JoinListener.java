@@ -8,10 +8,12 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
@@ -80,6 +82,10 @@ public class JoinListener implements Listener {
             ));
 
             p.spigot().sendMessage(text);
+        }
+        if(Skills.mission != null)
+        {
+            Skills.mission.progressPlayer(p, new ItemStack(Material.AIR, 0));
         }
 
     }
