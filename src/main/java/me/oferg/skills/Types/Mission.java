@@ -127,6 +127,7 @@ public class Mission
     public void progressPlayer(Player p, ItemStack item)
     {
         if(isComplete) return;
+        if(target == null) return;
         UUID playerUUID = p.getUniqueId();
         int targetAmount = target.getAmount();
         int current = playerProgress.getOrDefault(playerUUID, 0);
