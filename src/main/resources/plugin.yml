@@ -31,6 +31,10 @@ commands:
     description: sets a target for players to reach
     usage: /<command> %description% %skill% %reward% %item to collect% %amount%
     permission: skills.admin
+  tags:
+    description: opens the tags menu
+    usage: /<command>
+    permission: skills.everyone
 permissions:
   skills.everyone:
     description: anyone could use the commands

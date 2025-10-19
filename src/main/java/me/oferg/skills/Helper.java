@@ -29,6 +29,7 @@ public class Helper
     public static Map<Location, Integer> playerBlocksPlaced = new HashMap<>();
     public static Map<String, List<String>> itemCommands = new HashMap<>();
     public static Map<String, List<String>> itemPrices = new HashMap<>();
+    public static Map<Player, Map<Integer, ItemStack>> tags = new HashMap<>();
     public static String formatNumber(double num) {
         if (num >= 1_000_000_000) return String.format("%.1fB", num / 1_000_000_000.0);
         if (num >= 1_000_000)     return String.format("%.1fM", num / 1_000_000.0);
@@ -1066,5 +1067,27 @@ public class Helper
         String description = plugin.getConfig().getString(descriptionPath);
 
         Skills.mission = new Mission(description, skill, reward, plugin, target, false);
+    }
+
+    public static String getStyledTagName(String name, String skill) {
+        Map<String, String> skillEmojis = Map.of(
+                "mining", ChatColor.GRAY + "⛏",
+                "farming", ChatColor.GREEN + "♣",
+                "foraging", ChatColor.DARK_GREEN + "♠",
+                "fishing", ChatColor.AQUA + "✿",
+                "combat", ChatColor.RED + "✦",
+                "alchemy", ChatColor.LIGHT_PURPLE + "✹",
+                "enchanting", ChatColor.BLUE + "➤"
+        );
+
+        String emoji = skillEmojis.getOrDefault(skill.toLowerCase(), "⭐");
+
+        List<ChatColor> colors = List.of(
+                ChatColor.AQUA, ChatColor.BLUE, ChatColor.GREEN, ChatColor.GOLD,
+                ChatColor.LIGHT_PURPLE, ChatColor.RED, ChatColor.YELLOW
+        );
+        ChatColor color = colors.get(new Random().nextInt(colors.size()));
+
+        return emoji + " " + color + name;
     }
 }

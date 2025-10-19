@@ -6,6 +6,7 @@ import me.oferg.skills.Menus.CustomAnvil;
 import me.oferg.skills.Types.Mission;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,7 +28,9 @@ public final class Skills extends JavaPlugin {
         );
         System.out.println("Plugin has been enabled! SKILLZ Loading...");
         getConfig().options().copyDefaults(true);
-        saveDefaultConfig();
+        if (!new File(getDataFolder(), "config.yml").exists()) {
+            saveDefaultConfig();
+        }
         Helper.loadCommands(this);
         getServer().getPluginManager().registerEvents(new JoinListener(this), this);
         getServer().getPluginManager().registerEvents(new EntityDeathListener(this), this);
@@ -42,6 +45,8 @@ public final class Skills extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new RenameListener(this), this);
         getServer().getPluginManager().registerEvents(new CustomAnvil(this), this);
         getServer().getPluginManager().registerEvents(new ShopListener(this), this);
+        getServer().getPluginManager().registerEvents(new TagsListener(this), this);
+        getServer().getPluginManager().registerEvents(new AsyncPlayerChatListener(), this);
         getCommand("skills").setExecutor(new SkillsCommand(this));
         getCommand("giveXp").setExecutor(new GiveXpCommand(this));
         getCommand("skillProgress").setExecutor(new SkillProgressCommand(this));
@@ -49,6 +54,7 @@ public final class Skills extends JavaPlugin {
         getCommand("shop").setExecutor(new ShopCommand(this));
         getCommand("setMission").setExecutor(new SetMissionCommand(this));
         getCommand("setMission").setTabCompleter(new MissionTabCompleter());
+        getCommand("tags").setExecutor(new TagsCommand(this));
         Helper.loadPlayerPlacedBlocks(this);
         Helper.loadMission(this);
     }
