@@ -24,7 +24,8 @@ public final class Skills extends JavaPlugin {
                 "farming",
                 "fishing",
                 "alchemy",
-                "enchanting"
+                "enchanting",
+                "trading"
         );
         System.out.println("Plugin has been enabled! SKILLZ Loading...");
         getConfig().options().copyDefaults(true);
@@ -47,6 +48,7 @@ public final class Skills extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ShopListener(this), this);
         getServer().getPluginManager().registerEvents(new TagsListener(this), this);
         getServer().getPluginManager().registerEvents(new AsyncPlayerChatListener(), this);
+        getServer().getPluginManager().registerEvents(new VillagerTradeListener(this), this);
         getCommand("skills").setExecutor(new SkillsCommand(this));
         getCommand("giveXp").setExecutor(new GiveXpCommand(this));
         getCommand("skillProgress").setExecutor(new SkillProgressCommand(this));

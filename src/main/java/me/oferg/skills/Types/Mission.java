@@ -31,7 +31,10 @@ public class Mission
         this.reward = reward;
         this.plugin = plugin;
         this.isComplete = isComplete;
-        this.target = new ItemStack(target.getType(), target.getAmount());
+        if(target == null)
+            this.target = null;
+        else
+            this.target = new ItemStack(target.getType(), target.getAmount());
         this.bossBarSkills = new BossBarSkills();
     }
 

@@ -11,7 +11,7 @@ public class AsyncPlayerChatListener implements Listener
     public void onChat(AsyncPlayerChatEvent e) {
         Player p = e.getPlayer();
 
-        e.setFormat("%s %s");
+        //e.setFormat("%s: %s");
     }
 
 }
